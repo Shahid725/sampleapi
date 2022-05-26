@@ -1,14 +1,16 @@
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Home() {
-  const [data, setData] = useState([]);
+  const [data1, setData] = useState([]);
   useEffect(() => {
-    fetch("https://alaqsafunduat-api.isdb.org/static-stites?_limit=-1")
-      .then((res) => res.json())
+    axios
+      .get("https://alaqsafunduat-api.isdb.org/static-stites?_limit=-1")
+      // .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        setData(res);
+        console.log(res.data[0].static.about_introduction);
+        setData(res.data);
       });
   }, []);
 
@@ -16,7 +18,7 @@ export default function Home() {
     <div className={styles.container}>
       <h1>Shahid</h1>
       <div>
-        {data.map((dat) => (
+        {data1.map((dat) => (
           <div key={dat.id}>
             <p>{dat.id}</p>
             <p>{dat.locale}</p>
